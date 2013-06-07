@@ -1,0 +1,202 @@
+1.新增函数mazefuBlockDataGet
+2。转弯方向选择 增加条件
+3，crosswaycheck
+
+
+
+
+
+
+/*********************************************************************************************************
+** Function name:       mazefuBlockDataGet
+** Descriptions:        根据电脑鼠的相对方向，取出该方向上迷宫格的墙壁资料
+** input parameters:    ucDir: 电脑鼠的相对方向
+** output parameters:   无
+** Returned value:      GucMapBlock[cX][cY] : 墙壁资料
+*********************************************************************************************************/
+uint8 mazefuBlockDataGet (uint8  ucDirTemp)
+{
+    int8 cX = 0,cY = 0;
+    
+    /*
+     *  把电脑鼠的相对方向转换为绝对方向
+     */
+    switch (ucDirTemp) {
+
+    case MOUSEFRONT:
+        ucDirTemp = GucMouseDir;
+        break;
+
+    case MOUSELEFT:
+        ucDirTemp = (GucMouseDir + 3) % 4;
+        break;
+
+    case MOUSERIGHT:
+        ucDirTemp = (GucMouseDir + 1) % 4;
+        break;
+
+    default:
+        break;
+    }
+    
+    /*
+     *  根据绝对方向计算该方向上相邻格的坐标
+     */
+    switch (ucDirTemp) {
+
+    case 0:
+        cX = GmcMouse.cX;
+        cY = GmcMouse.cY + 1;
+        break;
+        
+    case 1:
+        cX = GmcMouse.cX + 1;
+        cY = GmcMouse.cY;
+        break;
+        
+    case 2:
+        cX = GmcMouse.cX;
+        cY = GmcMouse.cY - 1;
+        break;
+        
+    case 3:
+        cX = GmcMouse.cX - 1;
+        cY = GmcMouse.cY;
+        break;
+        
+    default:
+        break;
+    }
+    
+    return(fuGucMapBlock[cX][cY]);                                        /*  返回迷宫格上的资料          */
+}
+/*********************************************************************************************************
+** Function name:       rightMethod
+** Descriptions:        右手法则，优先向右前进
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void rightMethod (void)
+{
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_R)&&(mazefuBlockDataGet(MOUSERIGHT)!=0x0f)&&         /*  电脑鼠的右边有路            */
+        (mazeBlockDataGet(MOUSERIGHT) == 0x00)) {                       /*  电脑鼠的右边没有走过        */
+        mouseTurnright();                                               /*  电脑鼠右转                  */
+        return;
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_F)&&(mazefuBlockDataGet(MOUSEFRONT)!=0x0f) &&         /*  电脑鼠的前方有路            */
+        (mazeBlockDataGet(MOUSEFRONT) == 0x00)) {                       /*  电脑鼠的前方没有走过        */
+        return;                                                         /*  电脑鼠不用转弯              */
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_L)&&(mazefuBlockDataGet(MOUSELEFT )!= 0x0f) &&         /*  电脑鼠的左边有路            */
+        (mazeBlockDataGet(MOUSELEFT ) == 0x00)) {                       /*  电脑鼠的左边没有走过        */
+        mouseTurnleft();                                                /*  电脑鼠左转                  */
+        return;
+    }
+}
+/*********************************************************************************************************
+** Function name:       leftMethod
+** Descriptions:        左手法则，优先向左运动
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void leftMethod (void)
+{
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_L)&&(mazefuBlockDataGet(MOUSELEFT )!= 0x0f) &&         /*  电脑鼠的左边有路            */
+        (mazeBlockDataGet(MOUSELEFT ) == 0x00)) {                       /*  电脑鼠的左边没有走过        */
+        mouseTurnleft();                                                /*  电脑鼠左转                  */
+        return;
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_F)&&(mazefuBlockDataGet(MOUSEFRONT) != 0x0f) &&         /*  电脑鼠的前方有路            */
+        (mazeBlockDataGet(MOUSEFRONT) == 0x00)) {                       /*  电脑鼠的前方没有走过        */
+        return;                                                         /*  电脑鼠不用转弯              */
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_R) &&(mazefuBlockDataGet(MOUSERIGHT) != 0x0f)&&         /*  电脑鼠的右边有路            */
+        (mazeBlockDataGet(MOUSERIGHT) == 0x00)) {                       /*  电脑鼠的右边没有走过        */
+        mouseTurnright();                                               /*  电脑鼠右转                  */
+        return;
+    }
+}
+/*********************************************************************************************************
+** Function name:       frontRightMethod
+** Descriptions:        中右法则，优先向前运行，其次向右
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void frontRightMethod (void)
+{
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_F)&& (mazefuBlockDataGet(MOUSEFRONT) != 0x0f)&&         /*  电脑鼠的前方有路            */
+        (mazeBlockDataGet(MOUSEFRONT) == 0x00)) {                       /*  电脑鼠的前方没有走过        */
+        return;                                                         /*  电脑鼠不用转弯              */
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_R)&&(mazefuBlockDataGet(MOUSERIGHT) != 0x0f) &&         /*  电脑鼠的右边有路            */
+        (mazeBlockDataGet(MOUSERIGHT) == 0x00)) {                       /*  电脑鼠的右边没有走过        */
+        mouseTurnright();                                               /*  电脑鼠右转                  */
+        return;
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_L)&&(mazefuBlockDataGet(MOUSELEFT ) != 0x0f) &&         /*  电脑鼠的左边有路            */
+        (mazeBlockDataGet(MOUSELEFT ) == 0x00)) {                       /*  电脑鼠的左边没有走过        */
+        mouseTurnleft();                                                /*  电脑鼠左转                  */
+        return;
+    }
+}
+/*********************************************************************************************************
+** Function name:       frontLeftMethod
+** Descriptions:        中左法则，优先向前运行，其次向左
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void frontLeftMethod (void)
+{
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_F)&&(mazefuBlockDataGet(MOUSEFRONT) != 0x00) &&         /*  电脑鼠的前方有路            */
+        (mazeBlockDataGet(MOUSEFRONT) == 0x00)) {                       /*  电脑鼠的前方没有走过        */
+        return;                                                         /*  电脑鼠不用转弯              */
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_L)&&(mazefuBlockDataGet(MOUSELEFT ) != 0x0f) &&         /*  电脑鼠的左边有路            */
+        (mazeBlockDataGet(MOUSELEFT ) == 0x00)) {                       /*  电脑鼠的左边没有走过        */
+        mouseTurnleft();                                                /*  电脑鼠左转                  */
+        return;
+    }
+    if ((GucMapBlock[GmcMouse.cX][GmcMouse.cY] & MOUSEWAY_R)&&(mazefuBlockDataGet(MOUSERIGHT) != 0x0f) &&         /*  电脑鼠的右边有路            */
+        (mazeBlockDataGet(MOUSERIGHT) == 0x00)) {                       /*  电脑鼠的右边没有走过        */
+        mouseTurnright();                                               /*  电脑鼠右转                  */
+        return;
+    }
+}
+
+
+
+
+
+/*********************************************************************************************************
+** Function name:       crosswayCheck
+** Descriptions:        统计某坐标存在还未走过的支路数
+** input parameters:    ucX，需要检测点的横坐标
+**                      ucY，需要检测点的纵坐标
+** output parameters:   无
+** Returned value:      ucCt，未走过的支路数
+*********************************************************************************************************/
+uint8 crosswayCheck (int8  cX, int8  cY)
+{
+    uint8 ucCt = 0;
+    if ((GucMapBlock[cX][cY] & 0x01)&&(fuGucMapBlock[cX][cY + 1]!=0x0f )&&                                 /*  绝对方向，迷宫上方有路      */
+        (GucMapBlock[cX][cY + 1] == 0x00)) {                            /*  绝对方向，迷宫上方未走过    */
+        ucCt++;                                                         /*  可前进方向数加1             */
+    }
+    if ((GucMapBlock[cX][cY] & 0x02) &&(fuGucMapBlock[cX + 1][cY]!=0x0f)&&                                 /*  绝对方向，迷宫右方有路      */
+        (GucMapBlock[cX + 1][cY] == 0x00)) {                            /*  绝对方向，迷宫右方没有走过  */
+        ucCt++;                                                         /*  可前进方向数加1             */
+    }
+    if ((GucMapBlock[cX][cY] & 0x04) &&(fuGucMapBlock[cX][cY - 1]!=0x0f)&&                                 /*  绝对方向，迷宫下方有路      */
+        (GucMapBlock[cX][cY - 1] == 0x00)) {                            /*  绝对方向，迷宫下方未走过    */
+        ucCt++;                                                         /*  可前进方向数加1             */
+    }
+    if ((GucMapBlock[cX][cY] & 0x08)&&(fuGucMapBlock[cX - 1][cY]!=0x0f) &&                                 /*  绝对方向，迷宫左方有路      */
+        (GucMapBlock[cX - 1][cY] == 0x00)) {                            /*  绝对方向，迷宫左方未走过    */
+        ucCt++;                                                         /*  可前进方向数加1             */
+    }
+    return ucCt;
+}

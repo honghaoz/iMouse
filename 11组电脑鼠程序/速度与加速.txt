@@ -1,0 +1,8 @@
+86 86
+void mouseTurnright(void)
+        acc_change(1801139);
+	__GmLeft.uiPulse = 81;//86
+void mouseTurnleft(void)
+        acc_change(1801139);
+	__GmRight.uiPulse = 83;//86
+

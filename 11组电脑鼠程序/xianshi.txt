@@ -1,0 +1,30 @@
+int n=0;
+
+  n++;
+  if(n%3==0){
+              zlg7289Reset();
+                zlg7289Download(1, 0, 0, 0x00);
+               zlg7289Download(1, 1, 0, 0x00);
+                 zlg7289Download(1, 2, 0, 0x00);
+                  zlg7289Download(1, 3, 0, 0x00);
+                 zlg7289Download(1, 4, 0, 0x00);
+                  zlg7289Download(1, 5, 0, 0x00);
+                  zlg7289Download(1, 6, 0, 0x00);
+  }
+  else if(n%3==1){
+              zlg7289Reset();
+                zlg7289Download(1, 0, 0, 0x00);
+               zlg7289Download(1, 1, 0, 0x00);
+                 zlg7289Download(1, 2, 0, 0x00);
+                  zlg7289Download(1, 3, 0, 0x00);
+                 zlg7289Download(1, 4, 0, 0x00);
+
+    
+  }
+  else if(n%3==2){
+                  zlg7289Reset();
+                zlg7289Download(1, 0, 0, 0x00);
+               zlg7289Download(1, 1, 0, 0x00);
+                 zlg7289Download(1, 2, 0, 0x00);
+
+  }

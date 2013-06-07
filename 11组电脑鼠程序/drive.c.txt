@@ -1,0 +1,194 @@
+ Mouse_Drive.c
+
+uint8             GucMapBlock[MAZETYPE][MAZETYPE] = {0};                /*  GucMapBlock[x][y]           */
+                                                                        /*  x,横坐标;y,纵坐标;          */
+                                                                        /*  bit3~bit0分别代表左下右上   */
+                                                                        /*  0:该方向无路，1:该方向有路  */
+uint8             fuGucMapBlock[MAZETYPE][MAZETYPE]={0};
+
+
+2.新增函数
+/**/
+
+void fumapinit(void)
+{
+fuGucMapBlock[0][0]=0x08;/*防止把00当成死胡同*/
+fuGucMapBlock[0][7]=0x09;
+fuGucMapBlock[15][0]=0x08;
+fuGucMapBlock[15][7]=0x03;
+uint8 i;
+/**/
+i=6;
+while(i>0){
+fuGucMapBlock[0][i]=0x08;
+fuGucMapBlock[15][i]=0x02;
+i--;
+}
+/**/
+i=14;
+while(i>0){
+fuGucMapBlock[i][0]=0x04;
+fuGucMapBlock[i][7]=0x01;
+i--;
+}
+}
+
+
+void writefumap(void)
+{
+uint8 k;
+fuGucMapBlock[GmcMouse.cX][GmcMouse.cY]|=~GucMapBlock[GmcMouse.cX]
+
+[GmcMouse.cY];
+
+k=~fuGucMapBlock[GmcMouse.cX][GmcMouse.cY];
+if((GmcMouse.cY!=7&&GmcMouse.cX!=7)||(GmcMouse.cY!=7&&GmcMouse.cX!=7))
+{
+if(k==1||k==2||k==4||k==8) fuGucMapBlock[GmcMouse.cX][GmcMouse.cY]=0x0f;
+
+}
+
+guessmap1(GmcMouse.cX,GmcMouse.cY);
+
+
+}
+
+void guessmap1(uint8 x,uint8 y)
+{
+uint8 x1,y1,blocknum,k;
+x1=x;y1=y;
+/**/
+blocknum=0x01&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1][y1+1]|=0x04;
+k=~fuGucMapBlock[x1][y1+1];
+if(y1+1<8)
+{
+
+if(k==0x1||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1][y1+1]=0x0f;
+guessmap2(x1,y1+1);
+}
+}
+/**/
+blocknum=0x02&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1+1][y1]|=0x08;
+k=~fuGucMapBlock[x1+1][y1];
+if(x1+1<16)
+{
+if(k==0x1||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1+1][y1]=0x0f;
+guessmap2(x1+1,y1);
+}
+}
+/**/
+blocknum=0x04&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1][y1-1]|=0x01;
+k=~fuGucMapBlock[x1][y1-1];
+if(y1-1>0)
+{
+if(k==0x1||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1][y1-1]|=0x0f;
+guessmap2(x1,y1-1);
+}
+}
+/**/
+blocknum=0x08&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1-1][y1]|=0x02;
+k=~fuGucMapBlock[x1-1][y1];
+if(x1-1>0)
+{
+if(k==0x01||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1-1][y1]=0x0f;
+guessmap2(x1-1,y1);
+}
+}
+/**/
+}
+
+
+void guessmap2(uint8 x,uint8 y)
+{
+uint8 x1,y1,blocknum,k;
+x1=x;y1=y;
+/**/
+blocknum=0x01&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1][y1+1]|=0x04;
+k=~fuGucMapBlock[x1][y1+1];
+if(y1+1<8)
+{
+if(k==0x1||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1][y1+1]=0x0f;
+guessmap1(x1,y1+1);
+}
+}
+/**/
+blocknum=0x02&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1+1][y1]|=0x08;
+k=~fuGucMapBlock[x1+1][y1];
+if(x1+1<16)
+{
+if(k==0x01||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1+1][y1]=0x0f;
+guessmap1(x1+1,y1);
+}
+}
+/**/
+blocknum=0x04&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1][y1-1]|=0x01;
+k=~fuGucMapBlock[x1][y1-1];
+if(y1-1>0)
+{
+
+if(k==0x01||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1][y1-1]=0x0f;
+guessmap1(x1,y1-1);
+}
+}
+/**/
+blocknum=0x08&fuGucMapBlock[x1][y1];
+if(blocknum!=0)  fuGucMapBlock[x1-1][y1]|=0x02;
+k=~fuGucMapBlock[x1-1][y1];
+if(x1-1>0)
+{
+if(k==0x01||k==0x02||k==0x04||k==0x08)
+{
+fuGucMapBlock[x1-1][y1]=0x0f;
+guessmap1(x1-1,y1);
+}
+}
+/**/
+}
+
+
+
+
+** Function name:       mouseInit
+** Descriptions:        对LM3S615处理器进行初始化
+** input parameters:    无
+** output parameters:   无
+** Returned value:      无
+*********************************************************************************************************/
+void mouseInit (void)
+{
+    SysCtlClockSet( SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+                    SYSCTL_XTAL_6MHZ );                                 /*  使能PLL，50M                */
+
+    SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOB );                      /*  使能GPIO B口外设            */
+    SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOC );                      /*  使能GPIO C口外设            */
+    SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOD );                      /*  使能GPIO D口外设            */
+    SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOE );                      /*  使能GPIO E口外设            */
+    __keyInit();                                                        /*  按键初始化                  */
+    __sensorInit();                                                     /*  传感器初始化                */
+    __stepMotorIint();                                                  /*  步进电机控制初始化          */
+    __sysTickInit();                                                    /*  系统时钟初始化              */
+    __ADCInit();
+    GucMapBlock[0][0] = 0x01;
+    fumapinit();
+}

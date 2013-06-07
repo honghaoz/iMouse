@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>Maze/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>218</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      <PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Workspace>
+    <Build><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>761</ColumnWidth1><ColumnWidth2>203</ColumnWidth2><ColumnWidth3>50</ColumnWidth3></Build><TerminalIO/><Debug-Log/></Static>
+    <Windows>
+      
+    <Wnd1><Tabs><Tab><Identity>TabID-11482-28339</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-28777-23152</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd1><Wnd2><Tabs><Tab><Identity>TabID-6733-6757</Identity><TabName>Workspace</TabName><Factory>Workspace</Factory><Session><NodeDict><ExpandedNode>Maze</ExpandedNode><ExpandedNode>Maze/src</ExpandedNode><ExpandedNode>Maze/src/Mouse_Drive.c</ExpandedNode><ExpandedNode>Maze/src/maze.c</ExpandedNode><ExpandedNode>Maze/src/zlg7289.c</ExpandedNode><ExpandedNode>Maze/startup</ExpandedNode></NodeDict></Session></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd2></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>D:\Billy_Zhang\Desktop\15&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\11&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\Maze_12c12\src\maze.c</Filename><XPos>0</XPos><YPos>2180</YPos><SelStart>79115</SelStart><SelEnd>79115</SelEnd></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>D:\Billy_Zhang\Desktop\15&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\11&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\Maze_12c12\src\Mouse_Drive.c</Filename><XPos>0</XPos><YPos>25</YPos><SelStart>1664</SelStart><SelEnd>1664</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Billy_Zhang\Desktop\15&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\11&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\Maze_12c12\src\Mouse_Config.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Billy_Zhang\Desktop\15&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\11&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\Maze_12c12\src\Mouse_Drive.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Billy_Zhang\Desktop\15&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\11&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\Maze_12c12\src\zlg7289.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Billy_Zhang\Desktop\15&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\11&#x7eC4;&#x7535;&#x8111;&#x9F20;&#x7A0B;&#x5e8F;\Maze_12c12\src\startup.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-00542db8><key>iaridepm.enu1</key></Toolbar-00542db8></Sizes></Row0><Row1><Sizes><Toolbar-04c1c220><key>debuggergui.enu1</key></Toolbar-04c1c220></Sizes></Row1></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>483</Bottom><Right>309</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>156250</sizeHorzCX><sizeHorzCY>278552</sizeHorzCY><sizeVertCX>242969</sizeVertCX><sizeVertCY>675487</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>166</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>168</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>233983</sizeHorzCY><sizeVertCX>0</sizeVertCX><sizeVertCY>0</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

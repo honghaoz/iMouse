@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>99223552</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\src\maze.c</file>
+      <file>$TOOLKIT_DIR$\lib\Luminary\driverlib.r79</file>
+      <file>$PROJ_DIR$\src\Mouse_Drive.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\zlg7289.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\hw_ints.h</file>
+      <file>$PROJ_DIR$\Debug\List\Maze.map</file>
+      <file>$PROJ_DIR$\src\Mouse_Config.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\Mouse_Drive.pbi</file>
+      <file>$PROJ_DIR$\..\Maze\src\Mouse_Drive.c</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\pwm.h</file>
+      <file>$PROJ_DIR$\src\Maze.h</file>
+      <file>$PROJ_DIR$\src\Mouse_Drive.h</file>
+      <file>$PROJ_DIR$\src\zlg7289.c</file>
+      <file>$PROJ_DIR$\src\startup.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\zlg7289.r79</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\gpio.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\maze.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\interrupt.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl7mptnnl8n.r79</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\hw_memmap.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\Mouse_Drive.r79</file>
+      <file>$PROJ_DIR$\Debug\Obj\maze.r79</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\sysctl.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\startup.pbi</file>
+      <file>$PROJ_DIR$\Debug\Exe\Maze.sim</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\hw_types.h</file>
+      <file>$TOOLKIT_DIR$\config\lnk_LM3.xcl</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\adc.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\Maze.pbd</file>
+      <file>$PROJ_DIR$\src\Micromouse.h</file>
+      <file>$PROJ_DIR$\src\Type.h</file>
+      <file>$PROJ_DIR$\src\Zlg7289.h</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\timer.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\Maze.d79</file>
+      <file>$PROJ_DIR$\Debug\Obj\startup.r79</file>
+      <file>$PROJ_DIR$\Debug\Exe\Maze.bin</file>
+      <file>$TOOLKIT_DIR$\inc\Luminary\systick.h</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\src\maze.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 21</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 31 19 25 22 15 30 29 6 11 4 17 36 32 9 27</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 10 31 19 25 22 15 30 29 6 11 4 17 36 32 9 27</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\Mouse_Drive.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 7</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 11 19 4 25 17 15 22 36 32 9 27 31 30 29 6 10</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 11 19 4 25 17 15 22 36 32 9 27 31 30 29 6 10</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\zlg7289.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 14</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 31 19 25 22 15 30</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 31 19 25 22 15 30</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\startup.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 23</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 34</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 35 5 24</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\Maze.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 7 16 23 3</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\Maze.d79</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 26 20 21 34 14 1 18</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\Maze.bin</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 5 24</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 26 20 21 34 14 1 18</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

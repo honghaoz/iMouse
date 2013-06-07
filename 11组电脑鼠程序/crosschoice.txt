@@ -1,0 +1,159 @@
+void crosswayChoice (void)
+{
+  if (GmcMouse.cX & 0x08)
+	{
+        if (GmcMouse.cY & 0x08)   //此时电脑鼠在迷宫的右上角
+		{               
+			if(GmcMouse.cY>=GmcMouse.cX)
+		{switch (GucMouseDir) {              
+            case UP:
+		rightMethod();                 
+                break;
+            case RIGHT: 
+		rightMethod(); 
+                break;
+            case DOWN: 
+                frontLeftMethod();   
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                leftMethod();
+                break;
+            default:
+                break;
+            }}
+			else
+		{switch (GucMouseDir) {             
+            case UP:
+	        leftMethod();         
+                break;
+            case RIGHT: 
+		rightMethod(); 
+                break;
+            case DOWN: 
+		rightMethod(); 
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                frontLeftMethod();   
+                break;
+            default:
+                break;
+            }}
+            
+        } 
+		else                     // 此时电脑鼠在迷宫的右下角
+		{
+			if(GmcMouse.cY+GmcMouse.cX>=15)
+		{switch (GucMouseDir) {           
+            case UP:
+		leftMethod();			                               // 左                    
+                break;
+            case RIGHT: 
+	        leftMethod();
+                break;
+            case DOWN: 
+		rightMethod(); 
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                frontLeftMethod();   
+                break;
+            default:
+                break;
+            }}
+			else
+		{switch (GucMouseDir) {
+            case UP:
+	        frontLeftMethod();                
+                break;
+            case RIGHT: 
+                leftMethod();
+                break;
+            case DOWN: 
+                rightMethod();
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                rightMethod();   
+                break;
+            default:
+                break;
+            }}                        
+        }
+    }
+	else 
+	{
+        if (GmcMouse.cY & 0x08) //此时电脑鼠在迷宫的左上角
+		{   
+			if(GmcMouse.cY+GmcMouse.cX>=15)
+		{switch (GucMouseDir) {
+            case UP:
+                leftMethod();                
+                break;
+            case RIGHT: 
+                rightMethod();
+                break;
+            case DOWN:
+		frontLeftMethod();  		
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                leftMethod();   
+                break;
+            default:
+                break;
+            }}
+			else
+		{switch (GucMouseDir) {
+            case UP:
+	        rightMethod();               
+                break;
+            case RIGHT: 
+                frontLeftMethod();
+                break;
+            case DOWN:
+                leftMethod();
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                rightMethod();   
+                break;
+            default:
+                break;
+            }}
+            
+        }
+		else                    //此时电脑鼠在迷宫的左下角
+		{
+			if(GmcMouse.cY>GmcMouse.cX)
+		{switch (GucMouseDir) {
+            case UP:
+	        rightMethod();               
+                break;
+            case RIGHT: 
+	        frontLeftMethod();
+                break;
+            case DOWN:
+                leftMethod();
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                rightMethod();   
+                break;
+            default:
+                break;
+            }}
+			else
+		{switch (GucMouseDir) {
+            case UP:
+	        frontRightMethod();               
+                break;
+            case RIGHT: 
+	  	leftMethod();
+                break;
+            case DOWN:
+                leftMethod();    
+                break;
+            case LEFT:                                                  /*  当前电脑鼠向左              */
+                rightMethod(); 
+                break;
+            default:
+                break;
+            }}
+        }
+    }
+}

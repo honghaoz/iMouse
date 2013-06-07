@@ -1,0 +1,318 @@
+/*********************************************************************************************************
+** Function name:       mapStepEdit
+** Descriptions:        制作以目标点为起点的等高图
+** input parameters:    cX:    目的地横坐标
+**                      cY:    目的地纵坐标
+** output parameters:   GucMapStep[][]:  各坐标上的等高值
+** Returned value:      无
+*********************************************************************************************************/
+void mapStepEdit (int8  cX, int8  cY)
+{
+    uint8  n=0,m=0;                                   /*  GmcStack[]下标              */
+    uint16 ucStep = 1;                              /*  等高值                      */
+    uint8  ucStat = 0;                              /*  统计可前进的方向数          */
+    int8   i=0,j=0;
+    int8   cNBlock =0, cDirTemp;
+    uint8  cXcur=cX,cYcur=cY;
+    
+    uint8  Dircur=0;                                  //方向
+    uint16 ucsteptemp;				      //
+    uint8  choice;
+    
+    GmcStack[n].cX  = cXcur;                             /*  起点X值入栈                 */
+    GmcStack[n].cY  = cYcur;                             /*  起点Y值入栈                 */
+    Gucsave[n]=0;
+    n++;
+    
+    for(m = 0; m < 255; m++)   //初始化返回信息
+    {
+	GuiStep[m][0] = 0;
+	GuiStep[m][1] = 0;
+    }
+    m = 0;
+
+    
+    for (i = 0; i<16; i++)     //初始化等高值
+        for (j = 0; j<16; j++)
+            GucMapStep[i][j] = 0xffff;       
+
+    while (n)                  //制作等高图
+    {
+        GucMapStep[cXcur][cYcur] = ucStep;                     
+        ucStat = 0;
+        if (GucMapBlock[cXcur][cYcur] & 0x08)            /*  左方有路                    */
+	{    
+	    if(Dircur==0x08||Dircur==0)
+		ucsteptemp=ucStep+STRWEIGHT;
+	    else
+		ucsteptemp=ucStep+CURVEWEIGHT;
+	    if(GucMapStep[cXcur - 1][cYcur] > (ucsteptemp))
+	    {
+		ucStat++;
+		choice=0x08;
+	    }
+        }
+
+        if (GucMapBlock[cXcur][cYcur] & 0x04)            /*  下方有路                    */
+	{  
+            if(Dircur==0x04||Dircur==0)
+                    ucsteptemp=ucStep+STRWEIGHT;
+            else
+                    ucsteptemp=ucStep+CURVEWEIGHT;
+            if(GucMapStep[cXcur][cYcur - 1] > (ucsteptemp))
+            {
+                    ucStat++;
+                    choice=0x04;
+            }
+         }
+
+	if (GucMapBlock[cXcur][cYcur] & 0x02)          /*  右方有路                    */
+	{    
+            if(Dircur==0x02||Dircur==0)
+                    ucsteptemp=ucStep+STRWEIGHT;
+            else
+                    ucsteptemp=ucStep+CURVEWEIGHT;
+            if(GucMapStep[cXcur + 1][cYcur] > (ucsteptemp))
+            {
+                    ucStat++;
+                    choice=0x02;
+            }
+         }
+
+	if (GucMapBlock[cXcur][cYcur] & 0x01)        /*  上方有路                    */      
+	{     
+            if(Dircur==0x01||Dircur==0)
+                    ucsteptemp=ucStep+STRWEIGHT;
+            else
+                    ucsteptemp=ucStep+CURVEWEIGHT;
+            if(GucMapStep[cXcur][cYcur + 1] > (ucsteptemp))
+            {
+                    ucStat++;  
+                    choice=0x01;
+            }
+        }
+       
+        if (ucStat == 0) 
+        {
+            n--;
+            cXcur = GmcStack[n].cX;
+            cYcur = GmcStack[n].cY;
+	    Dircur = Gucsave[n];
+            ucStep = GucMapStep[cXcur][cYcur];
+        } 
+        else 
+        {
+	    if (ucStat > 1) 
+            {                                   
+                GmcStack[n].cX = cXcur;            
+                GmcStack[n].cY = cYcur; 
+		Gucsave[n]=Dircur;
+                n++;
+            }
+	    switch(choice)
+	    {
+		case 0x01:
+			if(Dircur==0x01||Dircur==0)
+			    ucStep+=STRWEIGHT;
+			else
+			    ucStep+=CURVEWEIGHT;
+			Dircur=0x01;
+			cYcur++;                                    
+			break;
+		case 0x02:
+			if(Dircur==0x02||Dircur==0)
+			    ucStep+=STRWEIGHT;
+			else
+			    ucStep+=CURVEWEIGHT;
+			Dircur=0x02;
+			cXcur++;                                      
+			break;
+		case 0x04:
+			if(Dircur==0x04||Dircur==0)
+			    ucStep+=STRWEIGHT;
+			else
+			    ucStep+=CURVEWEIGHT;
+			Dircur=0x04;
+			cYcur--;                                     
+			break;
+		case 0x08:
+			if(Dircur==0x08||Dircur==0)
+			    ucStep+=STRWEIGHT;
+			else
+			    ucStep+=CURVEWEIGHT;
+			Dircur=0x08;
+			cXcur--;                                       
+			break;
+	    }
+        }
+    }
+    //等高图制作完毕
+    cXcur = GmcMouse.cX;
+    cYcur = GmcMouse.cY;
+    ucsteptemp=0xffff;
+    ucStep = GucMapStep[cXcur][cYcur];
+    if ((GucMapBlock[cXcur][cYcur] & 0x01) &&               /*  上方有路                    */
+        (GucMapBlock[cXcur][cYcur+1]!=0) &&
+        (GucMapStep[cXcur][cYcur + 1] < ucStep)) 
+            ucsteptemp=GucMapStep[cXcur][cYcur + 1];
+
+    if ((GucMapBlock[cXcur][cYcur] & 0x02) &&               /*  右方有路                    */
+        (GucMapBlock[cXcur+1][cYcur]!=0) &&
+        (GucMapStep[cXcur + 1][cYcur] < ucStep)) 
+            if(GucMapStep[cXcur + 1][cYcur] < ucsteptemp)
+                    ucsteptemp=GucMapStep[cXcur+1][cYcur];
+
+    if ((GucMapBlock[cXcur][cYcur] & 0x04) &&               /*  下方有路                    */
+        (GucMapBlock[cXcur][cYcur-1]!=0) &&
+        (GucMapStep[cXcur][cYcur - 1] < ucStep)) 
+            if(GucMapStep[cXcur][cYcur -1] < ucsteptemp)
+                    ucsteptemp=GucMapStep[cXcur][cYcur -1];
+
+    if ((GucMapBlock[cXcur][cYcur] & 0x08) &&               /*  左方有路                    */
+        (GucMapBlock[cXcur-1][cYcur]!=0) &&
+        (GucMapStep[cXcur - 1][cYcur] < ucStep))
+            if(GucMapStep[cXcur -1][cYcur] < ucsteptemp)
+                    ucsteptemp=GucMapStep[cXcur -1][cYcur];
+
+
+    if ((GucMapBlock[cXcur][cYcur] & 0x01) &&               /*  上方有路                    */
+        (GucMapBlock[cXcur][cYcur+1]!=0) &&
+        (GucMapStep[cXcur][cYcur + 1]==ucsteptemp)) 
+    {                      
+        cDirTemp = UP;                                      
+    }
+    if ((GucMapBlock[cXcur][cYcur] & 0x02) &&               /*  右方有路                    */
+        (GucMapBlock[cXcur+1][cYcur]!=0) &&
+        (GucMapStep[cXcur + 1][cYcur]==ucsteptemp)) 
+    {            
+        cDirTemp = RIGHT;                                   
+    }
+    if ((GucMapBlock[cXcur][cYcur] & 0x04) &&               /*  下方有路                    */
+        (GucMapBlock[cXcur][cYcur-1]!=0) &&
+        (GucMapStep[cXcur][cYcur - 1]==ucsteptemp)) 
+    {           
+        cDirTemp = DOWN;                                   
+    }
+    if ((GucMapBlock[cXcur][cYcur] & 0x08) &&               /*  左方有路                    */
+        (GucMapBlock[cXcur-1][cYcur]!=0) &&
+        (GucMapStep[cXcur - 1][cYcur]==ucsteptemp))
+    {               
+        cDirTemp = LEFT;                                    
+    }
+   cDirTemp = (cDirTemp + 4 - GucMouseDir)%4;  
+    switch (cDirTemp) 
+    {
+            case 1:
+                GuiStep[0][1] = 0x1;   //右转
+                break;
+	     case 2:
+               GuiStep[0][1] = 0x3;    //后转
+                break;
+            case 3:
+                GuiStep[0][1] = 0x2;   //左转
+                break;
+            default:
+                break;
+    }
+    GucMouseDir = (GucMouseDir+cDirTemp)%4;
+    m++; 
+    
+    while ((cXcur != cX) || (cYcur != cY)) 
+    {
+        ucsteptemp=0xffff;
+        ucStep = GucMapStep[cXcur][cYcur];
+	if ((GucMapBlock[cXcur][cYcur] & 0x01) &&               /*  上方有路                    */
+            (GucMapBlock[cXcur][cYcur+1]!=0) &&
+            (GucMapStep[cXcur][cYcur + 1] < ucStep)) 
+		ucsteptemp=GucMapStep[cXcur][cYcur + 1];
+
+        if ((GucMapBlock[cXcur][cYcur] & 0x02) &&               /*  右方有路                    */
+            (GucMapBlock[cXcur+1][cYcur]!=0) &&
+            (GucMapStep[cXcur + 1][cYcur] < ucStep)) 
+		if(GucMapStep[cXcur + 1][cYcur] < ucsteptemp)
+			ucsteptemp=GucMapStep[cXcur+1][cYcur];
+
+	if ((GucMapBlock[cXcur][cYcur] & 0x04) &&               /*  下方有路                    */
+            (GucMapBlock[cXcur][cYcur-1]!=0) &&
+            (GucMapStep[cXcur][cYcur - 1] < ucStep)) 
+		if(GucMapStep[cXcur][cYcur -1] < ucsteptemp)
+			ucsteptemp=GucMapStep[cXcur][cYcur -1];
+
+	if ((GucMapBlock[cXcur][cYcur] & 0x08) &&               /*  左方有路                    */
+            (GucMapBlock[cXcur-1][cYcur]!=0) &&
+            (GucMapStep[cXcur - 1][cYcur] < ucStep))
+		if(GucMapStep[cXcur -1][cYcur] < ucsteptemp)
+			ucsteptemp=GucMapStep[cXcur -1][cYcur];
+
+
+        if ((GucMapBlock[cXcur][cYcur] & 0x01) &&               /*  上方有路                    */
+            (GucMapBlock[cXcur][cYcur+1]!=0) &&
+            (GucMapStep[cXcur][cYcur + 1]==ucsteptemp)) 
+        {                      
+            cDirTemp = UP;                                      
+            if (cDirTemp == GucMouseDir) 
+            { 
+                cNBlock++;                                     
+                cYcur++;
+                continue;                                      
+            }
+        }
+        if ((GucMapBlock[cXcur][cYcur] & 0x02) &&               /*  右方有路                    */
+            (GucMapBlock[cXcur+1][cYcur]!=0) &&
+            (GucMapStep[cXcur + 1][cYcur]==ucsteptemp)) 
+	{            
+            cDirTemp = RIGHT;                                   
+            if (cDirTemp == GucMouseDir)
+	    {         
+                cNBlock++;                                      
+                cXcur++;
+                continue;                                       
+            }
+        }
+        if ((GucMapBlock[cXcur][cYcur] & 0x04) &&               /*  下方有路                    */
+            (GucMapBlock[cXcur][cYcur-1]!=0) &&
+            (GucMapStep[cXcur][cYcur - 1]==ucsteptemp)) 
+	{           
+            cDirTemp = DOWN;                                   
+            if (cDirTemp == GucMouseDir) 
+	    {    
+                cNBlock++;                                      
+                cYcur--;
+                continue;                                       
+            }
+        }
+        if ((GucMapBlock[cXcur][cYcur] & 0x08) &&               /*  左方有路                    */
+            (GucMapBlock[cXcur-1][cYcur]!=0) &&
+            (GucMapStep[cXcur - 1][cYcur]==ucsteptemp))
+	{               
+            cDirTemp = LEFT;                                    
+            if (cDirTemp == GucMouseDir) 
+	    {      
+                cNBlock++;                                      
+                cXcur--;
+                continue;                                       
+            }
+        }
+       cDirTemp = (cDirTemp + 4 - GucMouseDir)%4;              /*  计算方向偏移量              */
+       GucMouseDir=(GucMouseDir+cDirTemp)%4;
+       GuiStep[m][0]=cNBlock;                                  /*  前进cNBlock步               */       
+       cNBlock = 0;                                            /*  任务清零                    */
+       
+       switch (cDirTemp) 
+       {
+            case 1:
+                GuiStep[m][1] = 0x1;   //右转
+                break;
+	     case 2:
+               GuiStep[m][1] = 0x3;    //后转
+                break;
+            case 3:
+                GuiStep[m][1] = 0x2;   //左转
+                break;
+            default:
+                break;
+       }
+       m++;
+    }
+    GuiStep[m][0] = cNBlock;    
+}
